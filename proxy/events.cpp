@@ -135,7 +135,22 @@ bool events::out::generictext(std::string packet) {
         }
         return false;
     }
-
+    /*
+    Safe vault bypass, to apply it all you gotta do is go to the world with the safe vault, and search for it,
+    then go on top of it and get the it's position, just reduce 1 from it's y value ( cause you are standing on top of it) 
+    or depends where you are standing  logically to the safe vault, after that open the solution and replace below the x and y values to the safe vault's respectively.
+    Now you need to get a safe box ( the orange one // the one without password) and place it anywhere in the world,
+    type in /vbypass, then wrench it and select the item that has the item ID you chose down here -> ("|\nitemid|2"), 
+    Or if you didn't change it just select the dirt block in game after you wrench it and click cancel, then click on the safe vault and click "Deposit item" or whatever
+    and there you have it you are able to see all the items inside the safe vault, and you can take them out
+    */
+    else if (find_command(chat, "vbypass")) {
+            int safevaultx = 1;
+            int safevaulty = 1;
+            gt::send_log("`5Bypassing safe vault");
+            g_server->send(false,"action|dialog_return\ndialog_name|storageboxxtreme\n|tilex|" + std::to_string(safevaultx) + "|\ntiley|" + std::to_string(safevaulty) + "|\nitemid|2");
+            return true;
+    }
     if (packet.find("game_version|") != -1) {
         rtvar var = rtvar::parse(packet);
         auto mac = utils::generate_mac();
